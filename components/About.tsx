@@ -2,7 +2,7 @@ import React from 'react';
 import Section from './Section';
 
 const initialDetails = {
-  intro: "I am Jommel Rowin S. Sabater, a passionate Machine Learning Engineer and Software Developer with a knack for building intelligent systems and seamless user experiences. I thrive on solving complex problems, from developing robust backend services to creating intuitive frontend interfaces. My journey in tech is driven by a deep curiosity for AI and its potential to reshape our world.",
+  intro: "Hi, I'm Joms—a dedicated Machine Learning Engineer and Software Developer passionate about building tech with medical impact. I specialize in training custom ML models and exploring innovations in voice cloning, speech analysis, image enhancement, and game development.",
   email: "sabaterjommelrowin@outlook.com",
   github: "https://github.com/jomzxc",
   linkedin: "https://www.linkedin.com/in/jomszxc/",

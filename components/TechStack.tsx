@@ -68,7 +68,7 @@ const TechStack: React.FC = () => {
               ))}
             </div>
           </div>
-          <div className="md:w-2/3 grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-6">
+          <div className="md:w-2/3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-6">
             {Object.entries(initialSkills).map(([category, skillList]) => (
               <div key={category}>
                 <h4 className="font-mono text-secondary mb-3 text-lg">"{category}"</h4>
