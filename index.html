@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jommel Rowin S. Sabater | Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': 'var(--color-primary)',
+                        'primary-focus': 'var(--color-primary-focus)',
+                        'secondary': 'var(--color-secondary)',
+                        'bg-main': 'var(--color-bg-main)',
+                        'bg-card': 'var(--color-bg-card)',
+                        'text-main': 'var(--color-text-main)',
+                        'text-muted': 'var(--color-text-muted)',
+                        'accent': 'var(--color-accent)',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Roboto Mono', 'monospace'],
+                    },
+                    animation: {
+                        'text-shimmer': 'text-shimmer 4s ease-in-out infinite',
+                        'float': 'float 3s ease-in-out infinite',
+                        'blink': 'blink 1s step-end infinite',
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        :root { /* Default: Matrix Theme */
+            --color-primary: #2DD4BF; /* teal-400 */
+            --color-primary-focus: #5EEAD4; /* teal-300 */
+            --color-secondary: #06B6D4; /* cyan-500 */
+            --color-bg-main: #0A0F1A;
+            --color-bg-card: rgba(15, 23, 42, 0.4); /* slate-900/40 */
+            --color-text-main: #CBD5E1; /* slate-300 */
+            --color-text-muted: #94A3B8; /* slate-400 */
+            --color-accent: #1E293B; /* slate-800 */
+            --primary-glow: rgba(45, 212, 191, 0.4);
+            --secondary-glow: rgba(45, 212, 191, 0.2);
+            --grid-color: rgba(45, 212, 191, 0.05);
+            --snake-color: rgba(45, 212, 191, 0.1);
+            --snake-head-color: rgba(110, 231, 183, 0.2);
+            --food-color: rgba(110, 231, 183, 0.2);
+        }
+
+        [data-theme='cyber'] {
+            --color-primary: #38BDF8; /* sky-400 */
+            --color-primary-focus: #7DD3FC; /* sky-300 */
+            --color-secondary: #60A5FA; /* blue-400 */
+            --color-bg-main: #0A192F;
+            --color-bg-card: rgba(17, 34, 64, 0.4);
+            --primary-glow: rgba(56, 189, 248, 0.4);
+            --secondary-glow: rgba(56, 189, 248, 0.2);
+            --grid-color: rgba(56, 189, 248, 0.05);
+            --snake-color: rgba(56, 189, 248, 0.1);
+            --snake-head-color: rgba(56, 189, 248, 0.2);
+            --food-color: rgba(56, 189, 248, 0.2);
+        }
+
+        [data-theme='synthwave'] {
+            --color-primary: #A78BFA; /* violet-400 */
+            --color-primary-focus: #C4B5FD; /* violet-300 */
+            --color-secondary: #F472B6; /* pink-400 */
+            --color-bg-main: #1D1135;
+            --color-bg-card: rgba(49, 28, 87, 0.4);
+            --primary-glow: rgba(167, 139, 250, 0.4);
+            --secondary-glow: rgba(167, 139, 250, 0.2);
+            --grid-color: rgba(167, 139, 250, 0.05);
+            --snake-color: rgba(167, 139, 250, 0.1);
+            --snake-head-color: rgba(167, 139, 250, 0.2);
+            --food-color: rgba(167, 139, 250, 0.2);
+        }
+        
+        [data-theme='solar'] {
+            --color-primary: #FB923C; /* orange-400 */
+            --color-primary-focus: #FDBA74; /* orange-300 */
+            --color-secondary: #FACC15; /* yellow-400 */
+            --color-bg-main: #1C1917; /* stone-900 */
+            --color-bg-card: rgba(41, 37, 36, 0.4);
+            --primary-glow: rgba(251, 146, 60, 0.4);
+            --secondary-glow: rgba(251, 146, 60, 0.2);
+            --grid-color: rgba(251, 146, 60, 0.05);
+            --snake-color: rgba(251, 146, 60, 0.1);
+            --snake-head-color: rgba(251, 146, 60, 0.2);
+            --food-color: rgba(251, 146, 60, 0.2);
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-snap-type: y mandatory;
+        }
+        body {
+            background-color: var(--color-bg-main);
+            color: var(--color-text-main);
+            transition: background-color 0.5s ease, color 0.5s ease;
+            cursor: none;
+        }
+        a, button, [role="button"], input, textarea, [tabindex] {
+            cursor: none !important;
+        }
+        /* Custom scrollbar for a better theme fit */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--color-bg-main);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--color-accent);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: color-mix(in srgb, var(--color-accent) 80%, white);
+        }
+        
+        @keyframes text-shimmer {
+            0%, 100% { background-position: -100% 0; }
+            50% { background-position: 100% 0; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+
+        .text-glow {
+            text-shadow: 0 0 8px var(--primary-glow), 0 0 24px var(--secondary-glow);
+        }
+
+        main > section:last-of-type .section-separator {
+            display: none;
+        }
+
+        .snap-section {
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+        }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.1.1/",
+    "react/": "https://aistudiocdn.com/react@^19.1.1/",
+    "react": "https://aistudiocdn.com/react@^19.1.1"
+  }
+}
+</script>
+</head>
+<body class="bg-bg-main text-text-main">
+    <div id="root"></div>
+</body>
+</html>
