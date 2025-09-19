@@ -30,6 +30,7 @@
                         'text-shimmer': 'text-shimmer 4s ease-in-out infinite',
                         'float': 'float 3s ease-in-out infinite',
                         'blink': 'blink 1s step-end infinite',
+                        'text-reveal': 'text-reveal 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards',
                     },
                 }
             }
@@ -48,9 +49,6 @@
             --primary-glow: rgba(45, 212, 191, 0.4);
             --secondary-glow: rgba(45, 212, 191, 0.2);
             --grid-color: rgba(45, 212, 191, 0.05);
-            --snake-color: rgba(45, 212, 191, 0.1);
-            --snake-head-color: rgba(110, 231, 183, 0.2);
-            --food-color: rgba(110, 231, 183, 0.2);
         }
 
         [data-theme='cyber'] {
@@ -62,9 +60,6 @@
             --primary-glow: rgba(56, 189, 248, 0.4);
             --secondary-glow: rgba(56, 189, 248, 0.2);
             --grid-color: rgba(56, 189, 248, 0.05);
-            --snake-color: rgba(56, 189, 248, 0.1);
-            --snake-head-color: rgba(56, 189, 248, 0.2);
-            --food-color: rgba(56, 189, 248, 0.2);
         }
 
         [data-theme='synthwave'] {
@@ -76,9 +71,6 @@
             --primary-glow: rgba(167, 139, 250, 0.4);
             --secondary-glow: rgba(167, 139, 250, 0.2);
             --grid-color: rgba(167, 139, 250, 0.05);
-            --snake-color: rgba(167, 139, 250, 0.1);
-            --snake-head-color: rgba(167, 139, 250, 0.2);
-            --food-color: rgba(167, 139, 250, 0.2);
         }
         
         [data-theme='solar'] {
@@ -90,9 +82,6 @@
             --primary-glow: rgba(251, 146, 60, 0.4);
             --secondary-glow: rgba(251, 146, 60, 0.2);
             --grid-color: rgba(251, 146, 60, 0.05);
-            --snake-color: rgba(251, 146, 60, 0.1);
-            --snake-head-color: rgba(251, 146, 60, 0.2);
-            --food-color: rgba(251, 146, 60, 0.2);
         }
 
         html {
@@ -148,6 +137,54 @@
         .snap-section {
             scroll-snap-align: start;
             scroll-snap-stop: always;
+        }
+
+        @property --angle {
+            syntax: '<angle>';
+            initial-value: 0deg;
+            inherits: false;
+        }
+        @keyframes spin {
+            to { --angle: 360deg; }
+        }
+        .interactive-card {
+            position: relative;
+            transform-style: preserve-3d;
+        }
+        .interactive-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 0.5rem; /* match rounded-lg */
+            border: 2px solid transparent;
+            background: conic-gradient(from var(--angle), transparent 25%, var(--color-primary-focus), transparent 50%) padding-box;
+            -webkit-mask: 
+                linear-gradient(#fff 0 0) content-box, 
+                linear-gradient(#fff 0 0);
+            -webkit-mask-composite: destination-out;
+            mask-composite: exclude;
+            z-index: 0;
+            opacity: 0;
+            transition: opacity 0.5s;
+            animation: spin 4s linear infinite paused;
+        }
+        .interactive-card:hover::after {
+            opacity: 1;
+            animation-play-state: running;
+        }
+        
+        @keyframes text-reveal {
+            from {
+                opacity: 0;
+                transform: translateY(20px) skew(4deg);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) skew(0);
+            }
         }
     </style>
 <script type="importmap">

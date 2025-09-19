@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import Section from './Section';
 
 const initialDetails = {
@@ -14,9 +14,36 @@ const initialDetails = {
 };
 
 const About: React.FC = () => {
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const card = cardRef.current;
+    if (!card) return;
+    const { left, top, width, height } = card.getBoundingClientRect();
+    const x = e.clientX - left - width / 2;
+    const y = e.clientY - top - height / 2;
+    const rotateX = (y / height) * -20;
+    const rotateY = (x / width) * 20;
+    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
+    card.style.transition = 'transform 0.1s ease-out';
+  };
+  
+  const handleMouseLeave = () => {
+    const card = cardRef.current;
+    if (!card) return;
+    card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+    card.style.transition = 'transform 0.6s cubic-bezier(0.23, 1, 0.32, 1)';
+  };
+
   return (
     <Section id="about" title="about.md">
-      <div className="bg-bg-card backdrop-blur-md rounded-lg p-6 sm:p-8 border border-primary/20 shadow-xl shadow-primary/10">
+      <div 
+        ref={cardRef}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        className="bg-bg-card backdrop-blur-md rounded-lg p-6 sm:p-8 border border-primary/20 shadow-xl shadow-primary/10 interactive-card hover:border-transparent hover:shadow-2xl hover:shadow-primary/30 transition-all duration-300"
+        style={{ transformStyle: 'preserve-3d' }}
+      >
         <p className="text-lg leading-relaxed mb-8">{initialDetails.intro}</p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-6">

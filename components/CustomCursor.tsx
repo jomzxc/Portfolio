@@ -4,14 +4,11 @@ const CustomCursor: React.FC = () => {
   const cursorDotRef = useRef<HTMLDivElement>(null);
   const cursorOutlineRef = useRef<HTMLDivElement>(null);
 
-  // State for things that cause re-renders (like class changes for opacity)
   const [isHovering, setIsHovering] = useState(false);
+  const [isMouseDown, setIsMouseDown] = useState(false);
 
-  // Refs for values used inside the animation loop to avoid stale closures
   const mousePos = useRef({ x: -100, y: -100 });
   const outlinePos = useRef({ x: -100, y: -100 });
-  const outlineScale = useRef(1);
-  const hoverTargetRef = useRef(false);
   const animationFrameId = useRef<number | null>(null);
 
   useEffect(() => {
@@ -22,7 +19,6 @@ const CustomCursor: React.FC = () => {
 
     const updateHoverState = (hovering: boolean) => {
         setIsHovering(hovering);
-        hoverTargetRef.current = hovering;
     };
 
     const handleMouseOver = (event: MouseEvent) => {
@@ -46,6 +42,9 @@ const CustomCursor: React.FC = () => {
         updateHoverState(false);
       }
     };
+    
+    const handleMouseDown = () => setIsMouseDown(true);
+    const handleMouseUp = () => setIsMouseDown(false);
 
     const animate = () => {
       const dot = cursorDotRef.current;
@@ -56,18 +55,12 @@ const CustomCursor: React.FC = () => {
       }
       
       if(outline) {
-        // Lerp position for smooth trailing effect
         const dx = mousePos.current.x - outlinePos.current.x;
         const dy = mousePos.current.y - outlinePos.current.y;
         outlinePos.current.x += dx * 0.15;
         outlinePos.current.y += dy * 0.15;
 
-        // Lerp scale for smooth size change on hover
-        const targetScale = hoverTargetRef.current ? 1.5 : 1;
-        const dScale = targetScale - outlineScale.current;
-        outlineScale.current += dScale * 0.2;
-
-        outline.style.transform = `translate(${outlinePos.current.x}px, ${outlinePos.current.y}px) scale(${outlineScale.current})`;
+        outline.style.transform = `translate(${outlinePos.current.x}px, ${outlinePos.current.y}px)`;
       }
 
       animationFrameId.current = requestAnimationFrame(animate);
@@ -76,6 +69,8 @@ const CustomCursor: React.FC = () => {
     document.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('mouseover', handleMouseOver);
     document.addEventListener('mouseout', handleMouseOut);
+    document.addEventListener('mousedown', handleMouseDown);
+    document.addEventListener('mouseup', handleMouseUp);
     
     animationFrameId.current = requestAnimationFrame(animate);
 
@@ -83,11 +78,13 @@ const CustomCursor: React.FC = () => {
       document.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseover', handleMouseOver);
       document.removeEventListener('mouseout', handleMouseOut);
+      document.removeEventListener('mousedown', handleMouseDown);
+      document.removeEventListener('mouseup', handleMouseUp);
       if (animationFrameId.current) {
         cancelAnimationFrame(animationFrameId.current);
       }
     };
-  }, []); // Empty dependency array ensures this effect runs only once.
+  }, []);
 
   return (
     <>
@@ -100,9 +97,9 @@ const CustomCursor: React.FC = () => {
         style={{
           boxShadow: '0 0 12px var(--primary-glow)',
         }}
-        className={`fixed top-0 left-0 w-10 h-10 -translate-x-1/2 -translate-y-1/2 border-2 border-primary rounded-full pointer-events-none z-[100] transition-opacity duration-300 ${
-          isHovering ? 'opacity-50' : 'opacity-30'
-        }`}
+        className={`fixed top-0 left-0 w-10 h-10 -translate-x-1/2 -translate-y-1/2 border-2 border-primary rounded-full pointer-events-none z-[100] transition-transform,opacity duration-300 ${
+          isHovering ? 'opacity-50 scale-150' : 'opacity-30'
+        } ${isMouseDown ? 'scale-[2.5] !opacity-0' : ''}`}
       />
     </>
   );

@@ -10,30 +10,23 @@ const DELETING_SPEED = 50;
 const PAUSE_DURATION = 2000;
 
 const Landing: React.FC = () => {
-  const [displayedName, setDisplayedName] = useState('');
-  const [nameIndex, setNameIndex] = useState(0);
-
+  const [nameComplete, setNameComplete] = useState(false);
   const [displayedTitle, setDisplayedTitle] = useState('');
   const [titleIndex, setTitleIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
 
-  // Effect for typing the name
+  // Effect to mark name animation as complete
   useEffect(() => {
-    if (nameIndex < NAME.length) {
-      const timeoutId = setTimeout(() => {
-        setDisplayedName((prev) => prev + NAME.charAt(nameIndex));
-        setNameIndex((prev) => prev + 1);
-      }, TYPING_SPEED);
-      return () => clearTimeout(timeoutId);
-    }
-  }, [nameIndex]);
-
-  const nameComplete = displayedName.length === NAME.length;
+    const animationTime = (NAME.length * 30) + 800; // Corresponds to CSS animation delay + duration
+    const timer = setTimeout(() => {
+      setNameComplete(true);
+    }, animationTime);
+    return () => clearTimeout(timer);
+  }, []);
 
   // Effect for typing/deleting the titles
   useEffect(() => {
-    // Only start titles animation after name is fully typed
     if (!nameComplete) return;
 
     const handleTyping = () => {
@@ -62,13 +55,22 @@ const Landing: React.FC = () => {
 
     return () => clearTimeout(typingTimeout);
   }, [charIndex, isDeleting, titleIndex, nameComplete]);
+  
+  const animatedName = NAME.split('').map((char, index) => (
+    <span
+      key={index}
+      className="inline-block opacity-0 animate-text-reveal"
+      style={{ animationDelay: `${index * 0.03}s` }}
+    >
+      {char === ' ' ? '\u00A0' : char}
+    </span>
+  ));
 
   return (
     <section className="h-screen flex flex-col items-center justify-center relative p-4 snap-section">
       <div className="text-center flex flex-col items-center justify-center space-y-6">
-        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold font-mono tracking-tight animate-text-shimmer bg-clip-text text-transparent bg-[linear-gradient(110deg,theme(colors.text-muted),45%,theme(colors.primary-focus),55%,theme(colors.text-muted))] bg-[length:200%_100%] [filter:drop-shadow(0_2px_8px_var(--primary-glow))] break-words">
-          {displayedName}
-          {!nameComplete && <span className="inline-block w-1 h-[80%] ml-1 sm:ml-2 bg-primary animate-pulse align-middle"></span>}
+        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold font-mono tracking-tight text-glow [filter:drop-shadow(0_2px_8px_var(--primary-glow))] break-words">
+          {animatedName}
         </h1>
         <div className="h-10 md:h-12">
           {nameComplete && (
