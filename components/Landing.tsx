@@ -5,92 +5,117 @@ const TITLES = [
   "Machine Learning Engineer",
   "Software Developer",
 ];
-const TYPING_SPEED = 100;
+const TYPING_SPEED = 80;
 const DELETING_SPEED = 50;
-const PAUSE_DURATION = 2000;
+const PAUSE_AFTER_TYPING = 1500;
+const PAUSE_AFTER_DELETING = 500;
+
+type LandingPhase = 'initial' | 'typingName' | 'animatingTitles';
 
 const Landing: React.FC = () => {
-  const [nameComplete, setNameComplete] = useState(false);
-  const [displayedTitle, setDisplayedTitle] = useState('');
-  const [titleIndex, setTitleIndex] = useState(0);
-  const [charIndex, setCharIndex] = useState(0);
-  const [isDeleting, setIsDeleting] = useState(false);
+    const [phase, setPhase] = useState<LandingPhase>('initial');
+    const [displayName, setDisplayName] = useState('');
 
-  // Effect to mark name animation as complete
-  useEffect(() => {
-    const animationTime = (NAME.length * 30) + 800; // Corresponds to CSS animation delay + duration
-    const timer = setTimeout(() => {
-      setNameComplete(true);
-    }, animationTime);
-    return () => clearTimeout(timer);
-  }, []);
+    // State for title animation
+    const [titleIndex, setTitleIndex] = useState(0);
+    const [displayTitle, setDisplayTitle] = useState('');
+    const [isDeleting, setIsDeleting] = useState(false);
 
-  // Effect for typing/deleting the titles
-  useEffect(() => {
-    if (!nameComplete) return;
-
-    const handleTyping = () => {
-      const currentTitle = TITLES[titleIndex];
-      if (isDeleting) {
-        if (charIndex > 0) {
-          setDisplayedTitle((prev) => prev.substring(0, prev.length - 1));
-          setCharIndex((prev) => prev - 1);
-        } else {
-          setIsDeleting(false);
-          setTitleIndex((prev) => (prev + 1) % TITLES.length);
+    // Effect for main phase transitions
+    useEffect(() => {
+        if (phase === 'initial') {
+            const timer = setTimeout(() => setPhase('typingName'), 1000);
+            return () => clearTimeout(timer);
         }
-      } else {
-        if (charIndex < currentTitle.length) {
-          setDisplayedTitle((prev) => prev + currentTitle.charAt(charIndex));
-          setCharIndex((prev) => prev + 1);
-        } else {
-          const pauseTimeout = setTimeout(() => setIsDeleting(true), PAUSE_DURATION);
-          return () => clearTimeout(pauseTimeout);
+        if (phase === 'typingName' && displayName === NAME) {
+            // Pause briefly after name is typed, before starting title animation
+            const timer = setTimeout(() => setPhase('animatingTitles'), PAUSE_AFTER_DELETING);
+            return () => clearTimeout(timer);
         }
-      }
-    };
+    }, [phase, displayName]);
 
-    const speed = isDeleting ? DELETING_SPEED : TYPING_SPEED;
-    const typingTimeout = setTimeout(handleTyping, speed);
+    // Effect for typing the name
+    useEffect(() => {
+        if (phase !== 'typingName' || displayName.length >= NAME.length) return;
 
-    return () => clearTimeout(typingTimeout);
-  }, [charIndex, isDeleting, titleIndex, nameComplete]);
-  
-  const animatedName = NAME.split('').map((char, index) => (
-    <span
-      key={index}
-      className="inline-block opacity-0 animate-text-reveal"
-      style={{ animationDelay: `${index * 0.03}s` }}
-    >
-      {char === ' ' ? ' ' : char}
-    </span>
-  ));
+        const timeoutId = setTimeout(() => {
+            setDisplayName(NAME.slice(0, displayName.length + 1));
+        }, TYPING_SPEED);
+        return () => clearTimeout(timeoutId);
+    }, [phase, displayName]);
+    
+    // Effect for the title animation loop
+    useEffect(() => {
+        if (phase !== 'animatingTitles') return;
 
-  return (
-    <section className="h-screen flex flex-col items-center justify-center relative p-4 snap-section">
-      <div className="text-center flex flex-col items-center justify-center space-y-6">
-        <h1 className="text-2xl sm:text-5xl md:text-6xl lg:text-7xl font-bold font-mono tracking-tight text-glow [filter:drop-shadow(0_2px_8px_var(--primary-glow))] break-words whitespace-pre-wrap">
-          {animatedName}
-        </h1>
-        <div className="h-10 md:h-12">
-          {nameComplete && (
-            <p className="text-base sm:text-xl md:text-2xl text-text-main font-sans">
-              {displayedTitle}
-              <span className="inline-block w-0.5 h-[80%] ml-1 bg-text-main animate-pulse align-middle"></span>
-            </p>
-          )}
-        </div>
-      </div>
-      
-      {nameComplete && (
-        <a href="#about" aria-label="Scroll to main content" className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-float cursor-pointer">
-          <svg className="w-8 h-8 text-text-muted hover:text-primary transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
-          </svg>
-        </a>
-      )}
-    </section>
-  );
+        const currentTitle = TITLES[titleIndex];
+        let timeoutId: number;
+
+        if (isDeleting) {
+            // Handle deleting
+            if (displayTitle.length > 0) {
+                timeoutId = window.setTimeout(() => {
+                    setDisplayTitle(prev => prev.slice(0, -1));
+                }, DELETING_SPEED);
+            } else {
+                // Finished deleting, pause then switch to next title
+                timeoutId = window.setTimeout(() => {
+                    setIsDeleting(false);
+                    setTitleIndex(prev => (prev + 1) % TITLES.length);
+                }, PAUSE_AFTER_DELETING);
+            }
+        } else {
+            // Handle typing
+            if (displayTitle.length < currentTitle.length) {
+                timeoutId = window.setTimeout(() => {
+                    setDisplayTitle(prev => currentTitle.slice(0, prev.length + 1));
+                }, TYPING_SPEED);
+            } else {
+                // Finished typing, pause then start deleting
+                timeoutId = window.setTimeout(() => {
+                    setIsDeleting(true);
+                }, PAUSE_AFTER_TYPING);
+            }
+        }
+
+        return () => clearTimeout(timeoutId);
+    }, [phase, displayTitle, isDeleting, titleIndex]);
+
+    const renderCursor = () => (
+        <span className="animate-blink">_</span>
+    );
+
+    return (
+        <section className="h-screen flex flex-col items-center justify-center relative p-4 snap-section landing-vignette">
+            <div className="text-center flex flex-col items-center justify-center space-y-6">
+                <div className="h-10 sm:h-20 md:h-24 lg:h-28 flex items-center justify-center">
+                    <h1 className="text-2xl sm:text-5xl md:text-6xl lg:text-7xl font-bold font-mono tracking-tight text-glow [filter:drop-shadow(0_2px_12px_var(--primary-glow))] whitespace-pre-wrap">
+                        {phase === 'initial' && renderCursor()}
+                        {phase === 'typingName' && <>{displayName}{displayName.length < NAME.length && renderCursor()}</>}
+                        {phase === 'animatingTitles' && NAME}
+                    </h1>
+                </div>
+
+                <div className="h-10 md:h-12">
+                     <p className="text-base sm:text-xl md:text-2xl text-text-main font-sans">
+                        {phase === 'animatingTitles' && <>{displayTitle}{renderCursor()}</>}
+                     </p>
+                </div>
+            </div>
+
+            {phase === 'animatingTitles' && (
+                <a href="#about" aria-label="Scroll to main content" className="absolute bottom-10 left-1/2 -translate-x-1/2 cursor-pointer">
+                    <div className="relative w-8 h-12">
+                        {[0, 1, 2].map(i => (
+                             <svg key={i} className="w-8 h-8 absolute text-text-muted hover:text-primary transition-colors animate-chevron-rain" style={{ animationDelay: `${i * 0.3}s` }} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        ))}
+                    </div>
+                </a>
+            )}
+        </section>
+    );
 };
 
 export default Landing;
