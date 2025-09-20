@@ -23,11 +23,11 @@ const projectsData: Project[] = [
     liveLink: null,
   },
   {
-    title: 'Interactive CLI Portfolio',
-    description: 'This personal portfolio website, designed to mimic a command-line interface. Built with modern frontend technologies for a dynamic, responsive, and themed user experience.',
+    title: 'Interactive CLI-Themed Portfolio',
+    description: 'A dynamic, CLI-inspired personal portfolio developed using prompt engineering techniques, featuring multiple themes.',
     tech: {
         'Frontend': ['React', 'TypeScript', 'Tailwind CSS'],
-        'Deployment': ['Vercel', 'Git'],
+        'Cloud/DevOps': ['Vercel', 'GCP', 'Git'],
     },
     repoLink: 'https://github.com/jomzxc/portfolio-cli',
     liveLink: '#',
@@ -42,6 +42,7 @@ const Projects: React.FC = () => {
   const projectsToShow = showAll ? projectsData : projectsData.slice(0, INITIAL_VISIBLE_COUNT);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (window.matchMedia("(pointer: coarse)").matches) return;
     const card = e.currentTarget;
     const { left, top, width, height } = card.getBoundingClientRect();
     const x = e.clientX - left - width / 2;
@@ -53,6 +54,7 @@ const Projects: React.FC = () => {
   };
   
   const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (window.matchMedia("(pointer: coarse)").matches) return;
     const card = e.currentTarget;
     card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
     card.style.transition = 'transform 0.6s cubic-bezier(0.23, 1, 0.32, 1)';
@@ -73,7 +75,7 @@ const Projects: React.FC = () => {
             <div className="relative z-10 flex flex-col justify-between h-full">
               <div>
                 <h3 className="font-mono text-xl text-primary mb-2">{project.title}</h3>
-                <p className="text-text-muted mb-4">{project.description}</p>
+                <p className="text-text-muted mb-4 text-sm sm:text-base">{project.description}</p>
                 <div className="space-y-3 mb-4">
                   {Object.entries(project.tech).map(([category, tools]) => (
                     <div key={category}>

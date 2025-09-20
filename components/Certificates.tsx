@@ -46,6 +46,7 @@ const Certificates: React.FC = () => {
   const certificatesToShow = showAll ? certificatesData : certificatesData.slice(0, INITIAL_VISIBLE_COUNT);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (window.matchMedia("(pointer: coarse)").matches) return;
     const card = e.currentTarget;
     const { left, top, width, height } = card.getBoundingClientRect();
     const x = e.clientX - left - width / 2;
@@ -57,6 +58,7 @@ const Certificates: React.FC = () => {
   };
   
   const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (window.matchMedia("(pointer: coarse)").matches) return;
     const card = e.currentTarget;
     card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
     card.style.transition = 'transform 0.6s cubic-bezier(0.23, 1, 0.32, 1)';

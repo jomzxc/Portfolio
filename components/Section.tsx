@@ -41,12 +41,12 @@ const Section: React.FC<SectionProps> = ({ id, title, children }) => {
     <section 
       id={id} 
       ref={sectionRef} 
-      className={`min-h-screen w-full flex flex-col items-center justify-center py-24 px-4 sm:px-8 scroll-mt-16 transition-all duration-1000 snap-section ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}
+      className={`min-h-screen w-full flex flex-col items-center justify-center py-20 px-4 sm:px-6 md:px-8 scroll-mt-16 transition-all duration-1000 snap-section ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}
     >
       <div className="max-w-4xl lg:max-w-6xl xl:max-w-7xl mx-auto w-full relative">
         <div className="absolute -top-4 -left-4 sm:-top-8 sm:-left-8 w-16 h-16 border-l-2 border-t-2 border-primary/20 opacity-50"></div>
         <div className="absolute -bottom-4 -right-4 sm:-bottom-8 sm:-right-8 w-16 h-16 border-r-2 border-b-2 border-primary/20 opacity-50"></div>
-        <h2 className="text-2xl md:text-3xl xl:text-4xl font-mono font-bold text-primary mb-12 flex items-center text-glow">
+        <h2 className="text-2xl md:text-3xl xl:text-4xl font-mono font-bold text-primary mb-8 md:mb-12 flex items-center text-glow">
           <span className="text-text-muted mr-2">$</span>
           <span className="text-text-main">cat ./</span>
           <span className="text-white">{title}</span>

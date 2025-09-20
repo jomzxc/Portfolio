@@ -11,20 +11,14 @@ interface TimelineEvent {
 
 const initialTimelineData: TimelineEvent[] = [
   {
-    date: '2023 - Present',
-    title: 'Machine Learning Engineer',
-    description: 'Developing and deploying production-level machine learning models for various business applications.',
-    link: '#',
-  },
-  {
-    date: '2021 - 2023',
-    title: 'Software Developer',
-    description: 'Worked on full-stack web applications, building features, fixing bugs, and contributing to system architecture.',
+    date: '2022 - Present',
+    title: 'B.S. in Computer Science, Specialization in Software Engineering',
+    description: 'Started undergraduate studies at FEU Institute of Technology, focusing on software engineering principles and practices.',
   },
   {
     date: '2021',
-    title: 'Graduated University',
-    description: 'Completed Bachelor of Science in Computer Science with a specialization in Artificial Intelligence.',
+    title: 'Discovered Passion for Code',
+    description: 'Ignited a passion for programming through self-directed learning on various online platforms, building a strong foundation in core concepts.',
   },
 ];
 

@@ -31,6 +31,20 @@
                         'float': 'float 3s ease-in-out infinite',
                         'blink': 'blink 1s step-end infinite',
                         'text-reveal': 'text-reveal 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards',
+                        'duck-walk-in': 'duck-walk-in 5s linear forwards',
+                        'duck-run-out': 'duck-run-out 3s linear forwards',
+                        'duck-head-turn': 'duck-head-turn 0.8s ease-in-out infinite',
+                        'look-left-right': 'look-left-right 5s ease-in-out infinite',
+                        'duck-jump': 'duck-jump 0.8s ease-out forwards',
+                        'speech-bubble-appear': 'speech-bubble-appear 0.3s ease-out forwards',
+                        'question-mark-float': 'question-mark-float 1s ease-in-out infinite',
+                        'wave-slow': 'wave 15s linear infinite',
+                        'wave-fast': 'wave 8s linear infinite',
+                        'splash-particle-1': 'splash-particle-1 0.6s ease-out forwards',
+                        'splash-particle-2': 'splash-particle-2 0.6s ease-out forwards',
+                        'splash-particle-3': 'splash-particle-3 0.6s ease-out forwards',
+                        'splash-particle-4': 'splash-particle-4 0.6s ease-out forwards',
+                        'splash-particle-5': 'splash-particle-5 0.6s ease-out forwards',
                     },
                 }
             }
@@ -97,6 +111,13 @@
         a, button, [role="button"], input, textarea, [tabindex] {
             cursor: none !important;
         }
+
+        @media (pointer: coarse) {
+            body, a, button, [role="button"], input, textarea, [tabindex] {
+                cursor: auto !important;
+            }
+        }
+        
         /* Custom scrollbar for a better theme fit */
         ::-webkit-scrollbar {
             width: 8px;
@@ -185,6 +206,59 @@
                 opacity: 1;
                 transform: translateY(0) skew(0);
             }
+        }
+
+        @keyframes duck-walk-in {
+            from { transform: translateX(-120px); }
+            to { transform: translateX(calc(50vw - 40px)); }
+        }
+        @keyframes duck-run-out {
+            from { transform: translateX(calc(50vw - 40px)); }
+            to { transform: translateX(100vw); }
+        }
+        @keyframes duck-head-turn {
+            0%, 100% { transform: rotate(-15deg); }
+            50% { transform: rotate(10deg); }
+        }
+        @keyframes look-left-right {
+            0%, 100% { transform: rotate(-40deg); }
+            50% { transform: rotate(40deg); }
+        }
+        @keyframes duck-jump {
+            0%, 100% { transform: translateX(calc(50vw - 40px)) translateY(0); }
+            50% { transform: translateX(calc(50vw - 40px)) translateY(-40px); }
+        }
+        @keyframes speech-bubble-appear {
+            from { opacity: 0; transform: translateY(10px) scale(0.5); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        @keyframes question-mark-float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        @keyframes wave {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+        @keyframes splash-particle-1 { /* Up and left */
+            0% { transform: translate(0, 0) scale(0); opacity: 1; }
+            100% { transform: translate(-20px, -20px) scale(1); opacity: 0; }
+        }
+        @keyframes splash-particle-2 { /* Up */
+            0% { transform: translate(0, 0) scale(0); opacity: 1; }
+            100% { transform: translate(0, -25px) scale(1); opacity: 0; }
+        }
+        @keyframes splash-particle-3 { /* Up and right */
+            0% { transform: translate(0, 0) scale(0); opacity: 1; }
+            100% { transform: translate(20px, -20px) scale(1); opacity: 0; }
+        }
+        @keyframes splash-particle-4 { /* Left */
+            0% { transform: translate(0, 0) scale(0); opacity: 1; }
+            100% { transform: translate(-25px, -5px) scale(1); opacity: 0; }
+        }
+        @keyframes splash-particle-5 { /* Right */
+            0% { transform: translate(0, 0) scale(0); opacity: 1; }
+            100% { transform: translate(25px, -5px) scale(1); opacity: 0; }
         }
     </style>
 <script type="importmap">

@@ -19,7 +19,7 @@ const Contact: React.FC = () => {
   return (
     <Section id="contact" title="contact.sh">
       <div className="bg-bg-card backdrop-blur-md rounded-lg p-6 sm:p-8 border border-primary/20 shadow-xl shadow-primary/10">
-        <p className="text-center text-lg mb-8">
+        <p className="text-center text-base sm:text-lg mb-8">
           Have a question or want to work together? Feel free to reach out.
         </p>
         <form onSubmit={handleSubmit} className="space-y-6 font-mono">

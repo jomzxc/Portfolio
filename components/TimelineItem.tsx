@@ -44,6 +44,7 @@ const TimelineItem: React.FC<TimelineItemProps> = ({ event, index }) => {
   }, []);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (window.matchMedia("(pointer: coarse)").matches) return;
     const card = e.currentTarget;
     const { left, top, width, height } = card.getBoundingClientRect();
     const x = e.clientX - left - width / 2;
@@ -55,6 +56,7 @@ const TimelineItem: React.FC<TimelineItemProps> = ({ event, index }) => {
   };
   
   const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (window.matchMedia("(pointer: coarse)").matches) return;
     const card = e.currentTarget;
     card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
     card.style.transition = 'transform 0.6s cubic-bezier(0.23, 1, 0.32, 1)';

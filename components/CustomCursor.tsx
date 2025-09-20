@@ -6,12 +6,18 @@ const CustomCursor: React.FC = () => {
 
   const [isHovering, setIsHovering] = useState(false);
   const [isMouseDown, setIsMouseDown] = useState(false);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
 
   const mousePos = useRef({ x: -100, y: -100 });
   const outlinePos = useRef({ x: -100, y: -100 });
   const animationFrameId = useRef<number | null>(null);
 
   useEffect(() => {
+    if (window.matchMedia("(pointer: coarse)").matches) {
+      setIsTouchDevice(true);
+      return;
+    }
+
     const handleMouseMove = (event: MouseEvent) => {
       mousePos.current.x = event.clientX;
       mousePos.current.y = event.clientY;
@@ -85,6 +91,10 @@ const CustomCursor: React.FC = () => {
       }
     };
   }, []);
+  
+  if (isTouchDevice) {
+    return null;
+  }
 
   return (
     <>

@@ -62,19 +62,19 @@ const Landing: React.FC = () => {
       className="inline-block opacity-0 animate-text-reveal"
       style={{ animationDelay: `${index * 0.03}s` }}
     >
-      {char === ' ' ? '\u00A0' : char}
+      {char === ' ' ? ' ' : char}
     </span>
   ));
 
   return (
     <section className="h-screen flex flex-col items-center justify-center relative p-4 snap-section">
       <div className="text-center flex flex-col items-center justify-center space-y-6">
-        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold font-mono tracking-tight text-glow [filter:drop-shadow(0_2px_8px_var(--primary-glow))] break-words">
+        <h1 className="text-2xl sm:text-5xl md:text-6xl lg:text-7xl font-bold font-mono tracking-tight text-glow [filter:drop-shadow(0_2px_8px_var(--primary-glow))] break-words whitespace-pre-wrap">
           {animatedName}
         </h1>
         <div className="h-10 md:h-12">
           {nameComplete && (
-            <p className="text-lg sm:text-xl md:text-2xl text-text-main font-sans">
+            <p className="text-base sm:text-xl md:text-2xl text-text-main font-sans">
               {displayedTitle}
               <span className="inline-block w-0.5 h-[80%] ml-1 bg-text-main animate-pulse align-middle"></span>
             </p>
