@@ -29,7 +29,7 @@ const projectsData: Project[] = [
         'Frontend': ['React', 'TypeScript', 'Tailwind CSS'],
         'Cloud/DevOps': ['Vercel', 'GCP', 'Git'],
     },
-    repoLink: 'https://github.com/jomzxc/portfolio-cli',
+    repoLink: 'https://github.com/jomzxc/Portfolio',
     liveLink: '#',
   },
 ];
