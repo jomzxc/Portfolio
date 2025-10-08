@@ -24,6 +24,18 @@ const projectsData: Project[] = [
   },
   {
     title: 'Interactive CLI-Themed Portfolio',
+    description: 'A web application for classifying TESS Objects of Interest (TOIs) into Planet Candidates or False Positives using a pre-trained machine learning model.',
+    tech: {
+        'Frontend': ['HTML', 'CSS'],
+        'Backend': ['Django', 'FastAPI'],
+        'Cloud/DevOps': ['Docker', 'Git'],
+        'Others': ['Jupyter'],
+    },
+    repoLink: 'https://github.com/jomzxc/Project-X',
+    liveLink: '#',
+  },
+  {
+    title: 'Interactive CLI-Themed Portfolio',
     description: 'A dynamic, CLI-inspired personal portfolio developed using prompt engineering techniques, featuring multiple themes.',
     tech: {
         'Frontend': ['React', 'TypeScript', 'Tailwind CSS'],
