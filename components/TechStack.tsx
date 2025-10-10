@@ -9,13 +9,16 @@ const allSkills = [
   { name: 'Java', iconPath: '/logos/java.png' },
   { name: 'HTML', iconPath: '/logos/html.png' },
   { name: 'PyTorch', iconPath: '/logos/pytorch.png' },
-  { name: 'Nvidia NeMo', iconPath: '/logos/nvidia-nemo.png' },
+  // Example: Increase the size for logos that appear small
+  { name: 'Nvidia NeMo', iconPath: '/logos/nvidia-nemo.png', sizeClass: 'h-14' },
   { name: 'OpenVoice', iconPath: '/logos/openvoice.png' },
   { name: 'React / Next.js', iconPath: '/logos/react.png' },
   { name: 'Vue.js', iconPath: '/logos/vuejs.png' },
-  { name: 'Django', iconPath: '/logos/django.png' },
+  // Example: Django logo is just text, so it needs to be taller
+  { name: 'Django', iconPath: '/logos/django.png', sizeClass: 'h-12' },
   { name: 'FastAPI', iconPath: '/logos/fastapi.png' },
-  { name: 'PostgreSQL', iconPath: '/logos/postgresql.png' },
+  // Example: Making the PostgreSQL logo slightly larger
+  { name: 'PostgreSQL', iconPath: '/logos/postgresql.png', sizeClass: 'h-12' },
   { name: 'GCP', iconPath: '/logos/gcp.png' },
   { name: 'Docker', iconPath: '/logos/docker.png' },
   { name: 'Vercel', iconPath: '/logos/vercel.png' },
@@ -39,12 +42,11 @@ const TechStack: React.FC = () => {
       <ul className="flex items-center">
         {allSkills.map((skill, index) => (
             <li key={`${skill.name}-${index}`} className="flex-shrink-0 w-40 flex flex-col items-center justify-center text-center group">
-              {/* This container centers the logo vertically */}
               <div className="h-16 flex items-center justify-center">
                 <img
                     src={skill.iconPath}
                     alt={`${skill.name} logo`}
-                    className="h-10 w-auto transition-transform duration-300 transform group-hover:scale-110"
+                    className={`${skill.sizeClass || 'h-10'} w-auto transition-transform duration-300 transform group-hover:scale-110`}
                 />
               </div>
               <p className="mt-2 text-sm text-text-muted font-mono">{skill.name}</p>
