@@ -255,17 +255,26 @@
             0% { transform: translate(0, 0) scale(0); opacity: 1; }
             100% { transform: translate(25px, -5px) scale(1); opacity: 0; }
         }
-        @keyframes infinite-scroll {
-            from { transform: translateX(0); }
-            to { transform: translateX(-50%); }
+        .scroller {
+            max-width: 100%;
         }
 
-        .animate-infinite-scroll {
-            animation: infinite-scroll 40s linear infinite;
+        .scroller__inner {
+            display: flex;
+            flex-wrap: wrap;
         }
 
-        .hover\:pause-animation:hover {
-            animation-play-state: paused;
+        .scroller[data-animated="true"] .scroller__inner {
+            width: max-content;
+            flex-wrap: nowrap;
+            animation: scroll 60s linear infinite; /* Increased duration for a smoother scroll */
+        }
+
+        @keyframes scroll {
+            to {
+                /* The transform value now depends on the parent's gap */
+                transform: translate(calc(-50% - 4rem)); /* 4rem is half of the gap (16) */
+            }
         }
     </style>
 <script type="importmap">

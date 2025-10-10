@@ -1,67 +1,46 @@
-import React, { useState, useMemo, useEffect, useRef } from 'react';
+import React, { useMemo, useEffect, useRef } from 'react';
 import Section from './Section';
 
-type Category = 'All' | 'Languages' | 'AI Frameworks' | 'Frontend' | 'Backend' | 'Cloud & DevOps';
-
-const allSkills = {
-  'Languages': [
-    { name: 'Python', iconPath: '/logos/python.png' },
-    { name: 'JavaScript', iconPath: '/logos/javascript.png' },
-    { name: 'SQL', iconPath: '/logos/sql.png' },
-    { name: 'C', iconPath: '/logos/c.png' },
-    { name: 'Java', iconPath: '/logos/java.png' },
-    { name: 'HTML', iconPath: '/logos/html.png' },
-  ],
-  'AI Frameworks': [
-    { name: 'PyTorch', iconPath: '/logos/pytorch.png' },
-    { name: 'Nvidia NeMo', iconPath: '/logos/nvidia-nemo.png' },
-    { name: 'OpenVoice', iconPath: '/logos/openvoice.png' },
-  ],
-  'Frontend': [
-    { name: 'React / Next.js', iconPath: '/logos/react.png' },
-    { name: 'Vue.js', iconPath: '/logos/vuejs.png' },
-  ],
-  'Backend': [
-    { name: 'Django', iconPath: '/logos/django.png' },
-    { name: 'FastAPI', iconPath: '/logos/fastapi.png' },
-    { name: 'PostgreSQL', iconPath: '/logos/postgresql.png' },
-  ],
-  'Cloud & DevOps': [
-    { name: 'GCP', iconPath: '/logos/gcp.png' },
-    { name: 'Docker', iconPath: '/logos/docker.png' },
-    { name: 'Vercel', iconPath: '/logos/vercel.png' },
-    { name: 'Git', iconPath: '/logos/git.png' },
-  ],
-};
+const allSkills = [
+  { name: 'Python', iconPath: '/logos/python.png' },
+  { name: 'JavaScript', iconPath: '/logos/javascript.png' },
+  { name: 'SQL', iconPath: '/logos/sql.png' },
+  { name: 'C', iconPath: '/logos/c.png' },
+  { name: 'Java', iconPath: '/logos/java.png' },
+  { name: 'HTML', iconPath: '/logos/html.png' },
+  { name: 'PyTorch', iconPath: '/logos/pytorch.png' },
+  { name: 'Nvidia NeMo', iconPath: '/logos/nvidia-nemo.png' },
+  { name: 'OpenVoice', iconPath: '/logos/openvoice.png' },
+  { name: 'React / Next.js', iconPath: '/logos/react.png' },
+  { name: 'Vue.js', iconPath: '/logos/vuejs.png' },
+  { name: 'Django', iconPath: '/logos/django.png' },
+  { name: 'FastAPI', iconPath: '/logos/fastapi.png' },
+  { name: 'PostgreSQL', iconPath: '/logos/postgresql.png' },
+  { name: 'GCP', iconPath: '/logos/gcp.png' },
+  { name: 'Docker', iconPath: '/logos/docker.png' },
+  { name: 'Vercel', iconPath: '/logos/vercel.png' },
+  { name: 'Git', iconPath: '/logos/git.png' },
+  { name: 'Linux', iconPath: '/logos/linux.png' },
+  { name: 'Windows', iconPath: '/logos/windows.png' },
+  { name: 'JetBrains Suite', iconPath: '/logos/jetbrains.png' },
+  { name: 'GitHub Copilot', iconPath: '/logos/github-copilot.png' },
+];
 
 const TechStack: React.FC = () => {
-  const [activeCategory, setActiveCategory] = useState<Category>('All');
   const scrollerRef = useRef<HTMLDivElement>(null);
 
-  const filteredSkills = useMemo(() => {
-    if (activeCategory === 'All') {
-      return Object.values(allSkills).flat();
-    }
-    return allSkills[activeCategory];
-  }, [activeCategory]);
-
   useEffect(() => {
+    // Start the animation if the user doesn't have "prefers-reduced-motion" enabled
     if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      addAnimation();
+      scrollerRef.current?.setAttribute("data-animated", "true");
     }
-  }, [filteredSkills]);
-
-  function addAnimation() {
-    scrollerRef.current?.setAttribute("data-animated", "true");
-  }
-
-  const categories: Category[] = ['All', 'Languages', 'AI Frameworks', 'Frontend', 'Backend', 'Cloud & DevOps'];
+  }, []);
 
   const skillList = (
-      <ul className="flex items-center justify-center md:justify-start [&_li]:mx-8 [&_img]:max-w-none animate-infinite-scroll">
-        {filteredSkills.map((skill, index) => (
+      // The list now gets its spacing from the parent's gap property
+      <ul className="flex items-center">
+        {allSkills.map((skill, index) => (
             <li key={`${skill.name}-${index}`} className="flex-shrink-0 w-36 h-36 flex flex-col items-center justify-center text-center group">
-              {/* This is the container that handles sizing and centering */}
               <div className="w-20 h-20 flex items-center justify-center">
                 <img
                     src={skill.iconPath}
@@ -78,33 +57,19 @@ const TechStack: React.FC = () => {
   return (
       <Section id="tech-stack" title="skills.json">
         <div className="bg-bg-card backdrop-blur-md rounded-lg p-6 sm:p-8 border border-primary/20 shadow-xl shadow-primary/10">
-          <div className="flex flex-wrap justify-center gap-2 sm:gap-4 mb-8 font-mono">
-            {categories.map(category => (
-                <button
-                    key={category}
-                    onClick={() => setActiveCategory(category)}
-                    className={`px-4 py-2 text-sm rounded-md transition-all duration-300 ${
-                        activeCategory === category
-                            ? 'bg-primary/20 text-primary-focus shadow-md'
-                            : 'text-text-muted hover:bg-accent/80 hover:text-text-main'
-                    }`}
-                >
-                  {category}
-                </button>
-            ))}
-          </div>
-
           <div
               ref={scrollerRef}
               className="scroller w-full overflow-hidden"
+              // This mask creates the fade-out effect on the sides
               style={{ mask: "linear-gradient(90deg, transparent, white 20%, white 80%, transparent)" }}
           >
-            <div className="scroller__inner flex gap-8">
+            {/* The `gap-16` class now controls the spacing between logos */}
+            <div className="scroller__inner flex gap-16">
               {skillList}
+              {/* We duplicate the list for a seamless loop */}
               {skillList}
             </div>
           </div>
-
         </div>
       </Section>
   );
