@@ -6,7 +6,7 @@ const allSkills = [
     {name: 'Python', icon: icons.python},
     {name: 'JavaScript', icon: icons.javascript},
     {name: 'SQLite', icon: icons.sqlite},
-    {nae: 'PostgreSQL', icon: icons.postgresql},
+    {name: 'PostgreSQL', icon: icons.postgresql},
     {name: 'C', icon: icons.c},
     {name: 'C++', icon: icons.cpp},
     {name: 'HTML', icon: icons.html},
@@ -36,11 +36,10 @@ const TechStack: React.FC = () => {
     const skillList = (
         <ul className="flex items-center">
             {allSkills.map((skill, index) => (
-                <li key={`${skill.name}-${index}`}
-                    className="flex-shrink-0 w-40 flex flex-col items-center justify-center text-center group">
+                <li key={`${skill.name}-${index}`} className="flex-shrink-0 w-40 flex flex-col items-center justify-center text-center group">
                     <div
-                        className="tech-logo w-16 h-16 text-text-muted group-hover:text-primary-focus transition-colors duration-300"
-                        dangerouslySetInnerHTML={{__html: skill.icon}}
+                        className="tech-logo-container w-16 h-16 transition-transform duration-300 transform group-hover:scale-110" // Apply the new class here
+                        dangerouslySetInnerHTML={{ __html: skill.icon }}
                     />
                     <p className="mt-4 text-sm text-text-muted font-mono">{skill.name}</p>
                 </li>
@@ -50,12 +49,11 @@ const TechStack: React.FC = () => {
 
     return (
         <Section id="tech-stack" title="skills.json">
-            <div
-                className="bg-bg-card backdrop-blur-md rounded-lg p-6 sm:p-8 border border-primary/20 shadow-xl shadow-primary/10">
+            <div className="bg-bg-card backdrop-blur-md rounded-lg p-6 sm:p-8 border border-primary/20 shadow-xl shadow-primary/10">
                 <div
                     ref={scrollerRef}
                     className="scroller w-full overflow-hidden"
-                    style={{mask: "linear-gradient(90deg, transparent, white 20%, white 80%, transparent)"}}
+                    style={{ mask: "linear-gradient(90deg, transparent, white 20%, white 80%, transparent)" }}
                 >
                     <div className="scroller__inner flex">
                         {skillList}
