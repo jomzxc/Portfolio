@@ -2,12 +2,12 @@ import React, { useRef } from 'react';
 import Section from './Section';
 
 const initialDetails = {
-  intro: "Hi, I'm Joms—a dedicated Machine Learning Engineer and Software Developer passionate about building tech with medical impact. I specialize in training custom ML models and exploring innovations in voice cloning, speech analysis, image enhancement, and game development.",
+  intro: "Hi, I'm Joms! A dedicated Machine Learning Engineer and Software Developer passionate about building tech with medical impact. I specialize in training custom ML models and exploring innovations in voice cloning, speech analysis, image analysis.",
   email: "sabaterjommelrowin@outlook.com",
   github: "https://github.com/jomzxc",
   linkedin: "https://www.linkedin.com/in/jomszxc/",
   languages: ['Tagalog', 'English'],
-  cvPath: "/path/to/cv.pdf"
+  cvPath: "resources/cv.pdf"
 };
 
 const About: React.FC = () => {
