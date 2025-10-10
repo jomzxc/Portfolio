@@ -40,7 +40,7 @@ const TechStack: React.FC = () => {
                 <img
                     src={skill.iconPath}
                     alt={`${skill.name} logo`}
-                    className={`${skill.sizeClass || 'h-8'} w-auto transition-transform duration-300 transform group-hover:scale-110`}
+                    className={`${skill.sizeClass || 'h-9'} w-auto transition-transform duration-300 transform group-hover:scale-110`}
                 />
               </div>
             </li>
