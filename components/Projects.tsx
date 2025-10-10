@@ -32,7 +32,7 @@ const projectsData: Project[] = [
         'Others': ['Jupyter'],
     },
     repoLink: 'https://github.com/jomzxc/Project-X',
-    liveLink: '#',
+    liveLink: null,
   },
   {
     title: 'Interactive CLI-Themed Portfolio',
