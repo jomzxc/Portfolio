@@ -1,7 +1,7 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import Section from './Section';
 
-type Category = 'All' | 'Languages' | 'AI Frameworks' | 'Frontend' | 'Backend' | 'Cloud & DevOps' | 'Tools & OS';
+type Category = 'All' | 'Languages' | 'AI Frameworks' | 'Frontend' | 'Backend' | 'Cloud & DevOps';
 
 const allSkills = {
   'Languages': [
@@ -36,6 +36,7 @@ const allSkills = {
 
 const TechStack: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState<Category>('All');
+  const scrollerRef = useRef<HTMLDivElement>(null);
 
   const filteredSkills = useMemo(() => {
     if (activeCategory === 'All') {
@@ -44,7 +45,35 @@ const TechStack: React.FC = () => {
     return allSkills[activeCategory];
   }, [activeCategory]);
 
-  const categories: Category[] = ['All', 'Languages', 'AI Frameworks', 'Frontend', 'Backend', 'Cloud & DevOps', 'Tools & OS'];
+  useEffect(() => {
+    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      addAnimation();
+    }
+  }, [filteredSkills]);
+
+  function addAnimation() {
+    scrollerRef.current?.setAttribute("data-animated", "true");
+  }
+
+  const categories: Category[] = ['All', 'Languages', 'AI Frameworks', 'Frontend', 'Backend', 'Cloud & DevOps'];
+
+  const skillList = (
+      <ul className="flex items-center justify-center md:justify-start [&_li]:mx-8 [&_img]:max-w-none animate-infinite-scroll">
+        {filteredSkills.map((skill, index) => (
+            <li key={`${skill.name}-${index}`} className="flex-shrink-0 w-36 h-36 flex flex-col items-center justify-center text-center group">
+              {/* This is the container that handles sizing and centering */}
+              <div className="w-20 h-20 flex items-center justify-center">
+                <img
+                    src={skill.iconPath}
+                    alt={`${skill.name} logo`}
+                    className="max-w-full max-h-full object-contain transition-transform duration-300 transform group-hover:scale-110"
+                />
+              </div>
+              <p className="mt-2 text-sm text-text-muted font-mono">{skill.name}</p>
+            </li>
+        ))}
+      </ul>
+  );
 
   return (
       <Section id="tech-stack" title="skills.json">
@@ -65,21 +94,17 @@ const TechStack: React.FC = () => {
             ))}
           </div>
 
-          <div className="relative w-full h-48 overflow-hidden">
-            <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-bg-card via-transparent to-bg-card z-10"></div>
-            <div className="flex animate-infinite-scroll hover:pause-animation">
-              {[...filteredSkills, ...filteredSkills].map((skill, index) => (
-                  <div key={index} className="flex-shrink-0 w-36 h-36 mx-8 flex flex-col items-center justify-center text-center group">
-                    <img
-                        src={skill.iconPath}
-                        alt={`${skill.name} logo`}
-                        className="w-16 h-16 object-contain transition-transform duration-300 transform group-hover:scale-110"
-                    />
-                    <p className="mt-2 text-sm text-text-muted font-mono">{skill.name}</p>
-                  </div>
-              ))}
+          <div
+              ref={scrollerRef}
+              className="scroller w-full overflow-hidden"
+              style={{ mask: "linear-gradient(90deg, transparent, white 20%, white 80%, transparent)" }}
+          >
+            <div className="scroller__inner flex gap-8">
+              {skillList}
+              {skillList}
             </div>
           </div>
+
         </div>
       </Section>
   );
