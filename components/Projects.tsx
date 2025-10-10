@@ -23,7 +23,7 @@ const projectsData: Project[] = [
     liveLink: null,
   },
   {
-    title: 'Interactive CLI-Themed Portfolio',
+    title: 'Project X',
     description: 'A web application for classifying TESS Objects of Interest (TOIs) into Planet Candidates or False Positives using a pre-trained machine learning model.',
     tech: {
         'Frontend': ['HTML', 'CSS'],
