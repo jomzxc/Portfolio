@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import Section from './Section';
 
 const allSkills = [
@@ -30,22 +30,21 @@ const TechStack: React.FC = () => {
   const scrollerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Start the animation if the user doesn't have "prefers-reduced-motion" enabled
     if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       scrollerRef.current?.setAttribute("data-animated", "true");
     }
   }, []);
 
   const skillList = (
-      // The list now gets its spacing from the parent's gap property
       <ul className="flex items-center">
         {allSkills.map((skill, index) => (
-            <li key={`${skill.name}-${index}`} className="flex-shrink-0 w-36 h-36 flex flex-col items-center justify-center text-center group">
-              <div className="w-20 h-20 flex items-center justify-center">
+            <li key={`${skill.name}-${index}`} className="flex-shrink-0 w-40 flex flex-col items-center justify-center text-center group">
+              {/* This container centers the logo vertically */}
+              <div className="h-16 flex items-center justify-center">
                 <img
                     src={skill.iconPath}
                     alt={`${skill.name} logo`}
-                    className="max-w-full max-h-full object-contain transition-transform duration-300 transform group-hover:scale-110"
+                    className="h-10 w-auto transition-transform duration-300 transform group-hover:scale-110"
                 />
               </div>
               <p className="mt-2 text-sm text-text-muted font-mono">{skill.name}</p>
@@ -60,13 +59,10 @@ const TechStack: React.FC = () => {
           <div
               ref={scrollerRef}
               className="scroller w-full overflow-hidden"
-              // This mask creates the fade-out effect on the sides
               style={{ mask: "linear-gradient(90deg, transparent, white 20%, white 80%, transparent)" }}
           >
-            {/* The `gap-16` class now controls the spacing between logos */}
-            <div className="scroller__inner flex gap-16">
+            <div className="scroller__inner flex">
               {skillList}
-              {/* We duplicate the list for a seamless loop */}
               {skillList}
             </div>
           </div>
