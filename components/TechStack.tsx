@@ -46,10 +46,9 @@ const TechStack: React.FC = () => {
                 <img
                     src={skill.iconPath}
                     alt={`${skill.name} logo`}
-                    className={`${skill.sizeClass || 'h-10'} w-auto transition-transform duration-300 transform group-hover:scale-110`}
+                    className={`${skill.sizeClass || 'h-20'} w-auto transition-transform duration-300 transform group-hover:scale-110`}
                 />
               </div>
-              <p className="mt-2 text-sm text-text-muted font-mono">{skill.name}</p>
             </li>
         ))}
       </ul>
