@@ -14,19 +14,13 @@ const allSkills = [
   { name: 'OpenVoice', iconPath: '/logos/openvoice.png' },
   { name: 'React / Next.js', iconPath: '/logos/react.png' },
   { name: 'Vue.js', iconPath: '/logos/vuejs.png' },
-  // Example: Django logo is just text, so it needs to be taller
   { name: 'Django', iconPath: '/logos/django.png', sizeClass: 'h-12' },
   { name: 'FastAPI', iconPath: '/logos/fastapi.png' },
-  // Example: Making the PostgreSQL logo slightly larger
   { name: 'PostgreSQL', iconPath: '/logos/postgresql.png', sizeClass: 'h-12' },
   { name: 'GCP', iconPath: '/logos/gcp.png' },
   { name: 'Docker', iconPath: '/logos/docker.png' },
   { name: 'Vercel', iconPath: '/logos/vercel.png' },
   { name: 'Git', iconPath: '/logos/git.png' },
-  { name: 'Linux', iconPath: '/logos/linux.png' },
-  { name: 'Windows', iconPath: '/logos/windows.png' },
-  { name: 'JetBrains Suite', iconPath: '/logos/jetbrains.png' },
-  { name: 'GitHub Copilot', iconPath: '/logos/github-copilot.png' },
 ];
 
 const TechStack: React.FC = () => {
@@ -46,7 +40,7 @@ const TechStack: React.FC = () => {
                 <img
                     src={skill.iconPath}
                     alt={`${skill.name} logo`}
-                    className={`${skill.sizeClass || 'h-20'} w-auto transition-transform duration-300 transform group-hover:scale-110`}
+                    className={`${skill.sizeClass || 'h-10'} w-auto transition-transform duration-300 transform group-hover:scale-110`}
                 />
               </div>
             </li>
