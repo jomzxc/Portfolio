@@ -28,7 +28,7 @@ const About: React.FC = () => {
     card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
     card.style.transition = 'transform 0.1s ease-out';
   };
-  
+
   const handleMouseLeave = () => {
     if (window.matchMedia("(pointer: coarse)").matches) return;
     const card = cardRef.current;
@@ -38,45 +38,45 @@ const About: React.FC = () => {
   };
 
   return (
-    <Section id="about" title="about.md">
-      <div 
-        ref={cardRef}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
-        className="bg-bg-card backdrop-blur-md rounded-lg p-6 sm:p-8 border border-primary/20 shadow-xl shadow-primary/10 interactive-card hover:border-transparent hover:shadow-2xl hover:shadow-primary/30 transition-all duration-300"
-        style={{ transformStyle: 'preserve-3d' }}
-      >
-        <p className="text-base sm:text-lg leading-relaxed mb-8">{initialDetails.intro}</p>
+      <Section id="about" title="about.md">
+        <div
+            ref={cardRef}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+            className="bg-bg-card backdrop-blur-md rounded-lg p-6 sm:p-8 border border-primary/20 shadow-xl shadow-primary/10 interactive-card hover:border-transparent hover:shadow-2xl hover:shadow-primary/30 transition-all duration-300"
+            style={{ transformStyle: 'preserve-3d' }}
+        >
+          <p className="text-base sm:text-lg leading-relaxed mb-8">{initialDetails.intro}</p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-6">
-          <div>
-            <h3 className="font-mono text-primary mb-4 text-xl">./contact</h3>
-            <div className="space-y-3">
-              <a href={`mailto:${initialDetails.email}`} className="flex items-center group"><span className="text-primary-focus mr-2 font-mono">&gt;</span> <span className="group-hover:underline">Email</span></a>
-              <a href={initialDetails.github} target="_blank" rel="noopener noreferrer" className="flex items-center group"><span className="text-primary-focus mr-2 font-mono">&gt;</span> <span className="group-hover:underline">GitHub</span></a>
-              <a href={initialDetails.linkedin} target="_blank" rel="noopener noreferrer" className="flex items-center group"><span className="text-primary-focus mr-2 font-mono">&gt;</span> <span className="group-hover:underline">LinkedIn</span></a>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-6">
+            <div>
+              <h3 className="font-mono text-primary mb-4 text-xl">./contact</h3>
+              <div className="space-y-3">
+                <a href={`mailto:${initialDetails.email}`} className="flex items-center group"><span className="text-primary-focus mr-2 font-mono">&gt;</span> <span className="group-hover:underline">Email</span></a>
+                <a href={initialDetails.github} target="_blank" rel="noopener noreferrer" className="flex items-center group"><span className="text-primary-focus mr-2 font-mono">&gt;</span> <span className="group-hover:underline">GitHub</span></a>
+                <a href={initialDetails.linkedin} target="_blank" rel="noopener noreferrer" className="flex items-center group"><span className="text-primary-focus mr-2 font-mono">&gt;</span> <span className="group-hover:underline">LinkedIn</span></a>
+              </div>
+            </div>
+            <div>
+              <h3 className="font-mono text-primary mb-4 text-xl">./languages</h3>
+              <div className="grid grid-cols-2 gap-x-8 gap-y-3">
+                {initialDetails.languages.map((lang, index) => (
+                    <React.Fragment key={index}>
+                      <span>{lang.name}</span>
+                      <span className="text-text-muted text-right md:text-left">{lang.fluency}</span>
+                    </React.Fragment>
+                ))}
+              </div>
             </div>
           </div>
-          <div>
-            <h3 className="font-mono text-primary mb-4 text-xl">./languages</h3>
-             <div className="space-y-3">
-              {initialDetails.languages.map((lang, index) => (
-                <div key={index} className="flex justify-between items-center">
-                    <span>{lang.name}</span>
-                    <span className="text-text-muted">{lang.fluency}</span>
-                </div>
-              ))}
-             </div>
+
+          <div className="mt-12 text-center">
+            <a href={initialDetails.cvPath} download className="font-mono inline-block bg-primary/20 border border-primary text-primary-focus px-6 py-3 rounded-md hover:bg-primary/40 hover:shadow-lg hover:shadow-primary/20 transition-all duration-300">
+              Download CV
+            </a>
           </div>
         </div>
-        
-        <div className="mt-12 text-center">
-          <a href={initialDetails.cvPath} download className="font-mono inline-block bg-primary/20 border border-primary text-primary-focus px-6 py-3 rounded-md hover:bg-primary/40 hover:shadow-lg hover:shadow-primary/20 transition-all duration-300">
-            Download CV
-          </a>
-        </div>
-      </div>
-    </Section>
+      </Section>
   );
 };
 
