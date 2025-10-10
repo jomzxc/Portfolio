@@ -2,14 +2,11 @@ import React, { useRef } from 'react';
 import Section from './Section';
 
 const initialDetails = {
-  intro: "Hi, I'm Joms! A dedicated Machine Learning Engineer and Software Developer passionate about building tech with real-world impact. I specialize in training custom ML models and exploring innovations in voice cloning, speech analysis, image analysis.",
+  intro: "Hi, I'm Joms—a dedicated Machine Learning Engineer and Software Developer passionate about building tech with medical impact. I specialize in training custom ML models and exploring innovations in voice cloning, speech analysis, image enhancement, and game development.",
   email: "sabaterjommelrowin@outlook.com",
   github: "https://github.com/jomzxc",
   linkedin: "https://www.linkedin.com/in/jomszxc/",
-  languages: [
-    { name: 'Tagalog', fluency: 'Native' },
-    { name: 'English', fluency: 'Fluent' },
-  ],
+  languages: ['Tagalog', 'English'],
   cvPath: "/path/to/cv.pdf"
 };
 
@@ -59,12 +56,11 @@ const About: React.FC = () => {
             </div>
             <div>
               <h3 className="font-mono text-primary mb-4 text-xl">./languages</h3>
-              <div className="grid grid-cols-2 gap-x-8 gap-y-3">
+              <div className="space-y-3">
                 {initialDetails.languages.map((lang, index) => (
-                    <React.Fragment key={index}>
-                      <span>{lang.name}</span>
-                      <span className="text-text-muted text-right md:text-left">{lang.fluency}</span>
-                    </React.Fragment>
+                    <div key={index}>
+                      <span>{lang}</span>
+                    </div>
                 ))}
               </div>
             </div>
