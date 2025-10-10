@@ -48,7 +48,7 @@ const TechStack: React.FC = () => {
     );
 
     return (
-        <Section id="tech-stack" title="skills.json">
+        <Section id="tech-stack" title="tech-stack.json">
             <div className="bg-bg-card backdrop-blur-md rounded-lg p-6 sm:p-8 border border-primary/20 shadow-xl shadow-primary/10">
                 <div
                     ref={scrollerRef}
