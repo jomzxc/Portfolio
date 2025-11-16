@@ -19,8 +19,8 @@ const projectsData: Project[] = [
       'Cloud/DevOps': ['GCP', 'Docker', 'Git'],
       'Frontend': ['HTML', 'JavaScript'],
     },
-    repoLink: 'https://github.com/jomzxc/Cleft2Speech',
-    liveLink: null,
+    repoLink: null,
+    liveLink: 'https://www.cleft2speech.live',
   },
   {
     title: 'Project X',
@@ -32,17 +32,27 @@ const projectsData: Project[] = [
         'Others': ['Jupyter'],
     },
     repoLink: 'https://github.com/jomzxc/Project-X',
-    liveLink: null,
+    liveLink: 'https://tess-classifier-prod.tail4ee54c.ts.net',
   },
   {
-    title: 'Interactive CLI-Themed Portfolio',
-    description: 'A dynamic, CLI-inspired personal portfolio developed using prompt engineering techniques, featuring multiple themes.',
+    title: 'WebDrop',
+    description: 'WebDrop is a secure, peer-to-peer file sharing web app powered by WebRTC.',
     tech: {
         'Frontend': ['React', 'TypeScript', 'Tailwind CSS'],
-        'Cloud/DevOps': ['Vercel', 'GCP', 'Git'],
+        'Cloud/DevOps': ['Vercel', 'Git'],
     },
-    repoLink: 'https://github.com/jomzxc/Portfolio',
-    liveLink: '#',
+    repoLink: 'https://github.com/jomzxc/WebDrop',
+    liveLink: 'https://webdrop.jomszxc.tech/',
+  },
+  {
+    title: 'Alkansya',
+    description: ' A modern TypeScript web app for goal-based saving and simple digital “piggy bank” management.',
+    tech: {
+        'Frontend': ['React', 'TypeScript', 'Tailwind CSS'],
+        'Cloud/DevOps': ['Vercel', 'Git'],
+    },
+    repoLink: 'https://github.com/jomzxc/Alkansya',
+    liveLink: 'https://alkansya.jomszxc.tech/',
   },
 ];
 
