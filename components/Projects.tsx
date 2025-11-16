@@ -7,6 +7,7 @@ interface Project {
   tech: Record<string, string[]>;
   repoLink: string;
   liveLink: string | null;
+  image?: string;
 }
 
 const projectsData: Project[] = [
@@ -19,7 +20,9 @@ const projectsData: Project[] = [
       'Cloud/DevOps': ['GCP', 'Docker', 'Git'],
       'Frontend': ['HTML', 'JavaScript'],
     },
+    repoLink: '',
     liveLink: 'https://www.cleft2speech.live',
+    image: '/images/projects/cleft2speech.svg',
   },
   {
     title: 'Project X',
@@ -32,6 +35,7 @@ const projectsData: Project[] = [
     },
     repoLink: 'https://github.com/jomzxc/Project-X',
     liveLink: 'https://tess-classifier-prod.tail4ee54c.ts.net',
+    image: '/images/projects/project-x.svg',
   },
   {
     title: 'WebDrop',
@@ -42,6 +46,7 @@ const projectsData: Project[] = [
     },
     repoLink: 'https://github.com/jomzxc/WebDrop',
     liveLink: 'https://webdrop.jomszxc.tech/',
+    image: '/images/projects/webdrop.svg',
   },
   {
     title: 'Alkansya',
@@ -52,6 +57,7 @@ const projectsData: Project[] = [
     },
     repoLink: 'https://github.com/jomzxc/Alkansya',
     liveLink: 'https://alkansya.jomszxc.tech/',
+    image: '/images/projects/alkansya.svg',
   },
 ];
 
@@ -95,6 +101,15 @@ const Projects: React.FC = () => {
             <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,var(--color-primary-focus-transparent,rgba(110,231,183,0.15)),transparent_40%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
             <div className="relative z-10 flex flex-col justify-between h-full">
               <div>
+                {project.image && (
+                  <div className="mb-4 rounded-lg overflow-hidden border border-primary/10 group-hover:border-primary/30 transition-colors duration-300">
+                    <img 
+                      src={project.image} 
+                      alt={project.title}
+                      className="w-full h-48 object-cover"
+                    />
+                  </div>
+                )}
                 <h3 className="font-mono text-xl text-primary mb-2">{project.title}</h3>
                 <p className="text-text-muted mb-4 text-sm sm:text-base">{project.description}</p>
                 <div className="space-y-3 mb-4">

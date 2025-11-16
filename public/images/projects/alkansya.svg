@@ -1,0 +1,14 @@
+<svg width="400" height="300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2DD4BF;stop-opacity:0.3" />
+      <stop offset="100%" style="stop-color:#06B6D4;stop-opacity:0.3" />
+    </linearGradient>
+  </defs>
+  <rect width="400" height="300" fill="#0A0F1A"/>
+  <rect width="400" height="300" fill="url(#grad4)"/>
+  <ellipse cx="200" cy="160" rx="60" ry="40" fill="none" stroke="#2DD4BF" stroke-width="2" opacity="0.6"/>
+  <rect x="190" y="120" width="20" height="30" rx="10" fill="none" stroke="#5EEAD4" stroke-width="2"/>
+  <circle cx="170" cy="150" r="5" fill="#06B6D4" opacity="0.8"/>
+  <text x="200" y="250" font-family="monospace" font-size="20" fill="#CBD5E1" text-anchor="middle">Alkansya</text>
+</svg>
