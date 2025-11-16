@@ -12,9 +12,21 @@ const PCMockup: React.FC<PCMockupProps> = ({ url, title, onClose }) => {
 
   useEffect(() => {
     // Prevent body scroll when modal is open
+    const originalOverflow = document.body.style.overflow;
+    const originalPosition = document.body.style.position;
+    const scrollY = window.scrollY;
+    
     document.body.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${scrollY}px`;
+    document.body.style.width = '100%';
+    
     return () => {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = originalOverflow;
+      document.body.style.position = originalPosition;
+      document.body.style.top = '';
+      document.body.style.width = '';
+      window.scrollTo(0, scrollY);
     };
   }, []);
 
@@ -47,15 +59,15 @@ const PCMockup: React.FC<PCMockupProps> = ({ url, title, onClose }) => {
 
   return (
     <div 
-      className="fixed inset-0 z-50 bg-bg-main/95 backdrop-blur-md animate-fadeIn flex items-center justify-center p-4"
+      className="fixed inset-0 z-50 bg-bg-main/95 backdrop-blur-md animate-fadeIn overflow-auto"
       onClick={onClose}
-      style={{ overflow: 'auto' }}
     >
-      {/* Modal Container */}
-      <div 
-        className="relative w-full max-w-6xl my-auto animate-scaleIn"
-        onClick={(e) => e.stopPropagation()}
-      >
+      <div className="min-h-full flex items-center justify-center p-4">
+        {/* Modal Container */}
+        <div 
+          className="relative w-full max-w-6xl animate-scaleIn"
+          onClick={(e) => e.stopPropagation()}
+        >
         {/* Terminal-style Window */}
         <div className="relative w-full bg-bg-card backdrop-blur-md border-2 border-primary/30 rounded-lg shadow-2xl shadow-primary/20 flex flex-col overflow-hidden">
           {/* Terminal Header */}
@@ -145,6 +157,7 @@ const PCMockup: React.FC<PCMockupProps> = ({ url, title, onClose }) => {
         {/* Corner decorations matching the portfolio style */}
         <div className="absolute -top-2 -left-2 w-12 h-12 border-l-2 border-t-2 border-primary/40 opacity-50 pointer-events-none"></div>
         <div className="absolute -bottom-2 -right-2 w-12 h-12 border-r-2 border-b-2 border-primary/40 opacity-50 pointer-events-none"></div>
+        </div>
       </div>
     </div>
   );
