@@ -22,7 +22,7 @@ const projectsData: Project[] = [
     },
     repoLink: '',
     liveLink: 'https://www.cleft2speech.live',
-    image: '/images/projects/cleft2speech.svg',
+    image: '/images/projects/cleft2speech.jpeg',
   },
   {
     title: 'Project X',
@@ -35,7 +35,7 @@ const projectsData: Project[] = [
     },
     repoLink: 'https://github.com/jomzxc/Project-X',
     liveLink: 'https://tess-classifier-prod.tail4ee54c.ts.net',
-    image: '/images/projects/project-x.svg',
+    image: '/images/projects/project-x.jpeg',
   },
   {
     title: 'WebDrop',
@@ -46,7 +46,7 @@ const projectsData: Project[] = [
     },
     repoLink: 'https://github.com/jomzxc/WebDrop',
     liveLink: 'https://webdrop.jomszxc.tech/',
-    image: '/images/projects/webdrop.svg',
+    image: '/images/projects/webdrop.jpeg',
   },
   {
     title: 'Alkansya',
@@ -57,7 +57,7 @@ const projectsData: Project[] = [
     },
     repoLink: 'https://github.com/jomzxc/Alkansya',
     liveLink: 'https://alkansya.jomszxc.tech/',
-    image: '/images/projects/alkansya.svg',
+    image: '/images/projects/alkansya.jpeg',
   },
 ];
 
