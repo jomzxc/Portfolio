@@ -102,11 +102,11 @@ const Projects: React.FC = () => {
             <div className="relative z-10 flex flex-col justify-between h-full">
               <div>
                 {project.image && (
-                  <div className="mb-4 rounded-lg overflow-hidden border border-primary/10 group-hover:border-primary/30 transition-colors duration-300 bg-gradient-to-br from-bg-main/50 to-bg-card/50">
+                  <div className="mb-4">
                     <img 
                       src={project.image} 
                       alt={project.title}
-                      className="w-full h-48 object-contain"
+                      className="w-full rounded-lg border border-primary/10 group-hover:border-primary/30 transition-all duration-300"
                     />
                   </div>
                 )}
