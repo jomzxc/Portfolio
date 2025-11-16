@@ -19,7 +19,6 @@ const projectsData: Project[] = [
       'Cloud/DevOps': ['GCP', 'Docker', 'Git'],
       'Frontend': ['HTML', 'JavaScript'],
     },
-    repoLink: null,
     liveLink: 'https://www.cleft2speech.live',
   },
   {
