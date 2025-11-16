@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Section from './Section';
+import PCMockup from './PCMockup';
 
 interface Project {
   title: string;
@@ -61,6 +62,7 @@ const INITIAL_VISIBLE_COUNT = 4;
 
 const Projects: React.FC = () => {
   const [showAll, setShowAll] = useState(false);
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const projectsToShow = showAll ? projectsData : projectsData.slice(0, INITIAL_VISIBLE_COUNT);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -118,7 +120,12 @@ const Projects: React.FC = () => {
                 {project.liveLink && (
                     <>
                       <span className="text-gray-600">/</span>
-                      <a href={project.liveLink} target="_blank" rel="noopener noreferrer" className="text-text-main hover:text-primary transition-colors">[live_demo]</a>
+                      <button
+                        onClick={() => setSelectedProject(project)}
+                        className="text-text-main hover:text-primary transition-colors cursor-pointer"
+                      >
+                        [live_demo]
+                      </button>
                     </>
                 )}
               </div>
@@ -135,6 +142,13 @@ const Projects: React.FC = () => {
             {showAll ? '[show_less]' : '[show_more]'}
           </button>
         </div>
+      )}
+      {selectedProject && selectedProject.liveLink && (
+        <PCMockup
+          url={selectedProject.liveLink}
+          title={selectedProject.title}
+          onClose={() => setSelectedProject(null)}
+        />
       )}
     </Section>
   );
