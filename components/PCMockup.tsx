@@ -26,31 +26,45 @@ const PCMockup: React.FC<PCMockupProps> = ({ url, title, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm animate-fadeIn">
+    <div 
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-bg-main/95 backdrop-blur-md animate-fadeIn overflow-y-auto"
+      onClick={onClose}
+    >
       {/* Modal Container */}
-      <div className="relative w-[95vw] h-[90vh] max-w-7xl animate-scaleIn">
-        {/* PC Monitor Frame */}
-        <div className="relative w-full h-full bg-gradient-to-b from-gray-800 to-gray-900 rounded-2xl shadow-2xl border-8 border-gray-700 flex flex-col">
-          {/* Monitor Top Bar */}
-          <div className="relative bg-gradient-to-b from-gray-700 to-gray-800 rounded-t-xl px-4 py-2 flex items-center justify-between border-b-2 border-gray-600">
-            <div className="flex items-center space-x-2">
-              <div className="w-3 h-3 rounded-full bg-red-500 hover:bg-red-600 cursor-pointer transition-colors" onClick={onClose}></div>
-              <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-              <div className="w-3 h-3 rounded-full bg-green-500"></div>
+      <div 
+        className="relative w-full max-w-6xl my-auto animate-scaleIn"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Terminal-style Window */}
+        <div className="relative w-full bg-bg-card backdrop-blur-md border-2 border-primary/30 rounded-lg shadow-2xl shadow-primary/20 flex flex-col overflow-hidden">
+          {/* Terminal Header */}
+          <div className="relative bg-accent border-b-2 border-primary/30 px-4 py-3 flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <div className="flex items-center space-x-2">
+                <div className="w-3 h-3 rounded-full bg-primary/60 hover:bg-primary cursor-pointer transition-colors" onClick={onClose}></div>
+                <div className="w-3 h-3 rounded-full border border-primary/40"></div>
+                <div className="w-3 h-3 rounded-full border border-primary/40"></div>
+              </div>
+              <span className="text-primary font-mono text-sm">$</span>
+              <span className="text-text-main font-mono text-sm">demo --url=</span>
+              <span className="text-primary-focus font-mono text-sm truncate">{title}</span>
             </div>
-            <div className="flex-1 text-center">
-              <span className="text-gray-300 text-sm font-mono truncate block px-4">{title}</span>
-            </div>
-            <div className="w-16"></div>
+            <button
+              onClick={onClose}
+              className="text-text-muted hover:text-primary transition-colors font-mono text-lg leading-none"
+              aria-label="Close"
+            >
+              ✕
+            </button>
           </div>
 
           {/* Screen Content Area */}
-          <div className="relative flex-1 bg-white rounded-b-xl overflow-hidden">
+          <div className="relative bg-bg-main" style={{ height: 'calc(80vh - 8rem)' }}>
             {isLoading && (
-              <div className="absolute inset-0 flex items-center justify-center bg-gray-100 z-10">
+              <div className="absolute inset-0 flex items-center justify-center bg-bg-main z-10">
                 <div className="text-center">
                   <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-                  <p className="text-gray-600 font-mono">Loading demo...</p>
+                  <p className="text-primary font-mono text-sm">[loading_demo...]</p>
                 </div>
               </div>
             )}
@@ -63,35 +77,33 @@ const PCMockup: React.FC<PCMockupProps> = ({ url, title, onClose }) => {
             />
           </div>
 
-          {/* Monitor Stand */}
-          <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 w-32 h-2 bg-gray-700 rounded-b-lg"></div>
-          <div className="absolute -bottom-10 left-1/2 transform -translate-x-1/2 w-48 h-2 bg-gray-800 rounded-full"></div>
+          {/* Terminal Footer / Action Bar */}
+          <div className="relative bg-accent border-t-2 border-primary/30 px-4 py-3 flex items-center justify-between">
+            <div className="flex items-center space-x-2 text-text-muted font-mono text-xs">
+              <span className="text-primary">◆</span>
+              <span>Live Demo</span>
+            </div>
+            <div className="flex items-center space-x-3">
+              <button
+                onClick={handleVisitLink}
+                className="text-primary hover:text-primary-focus font-mono text-sm transition-colors hover:text-glow"
+              >
+                [open_in_new_tab]
+              </button>
+              <span className="text-primary/30">|</span>
+              <button
+                onClick={onClose}
+                className="text-text-muted hover:text-primary font-mono text-sm transition-colors"
+              >
+                [close]
+              </button>
+            </div>
+          </div>
         </div>
 
-        {/* Action Buttons */}
-        <div className="absolute -bottom-20 left-1/2 transform -translate-x-1/2 flex space-x-4">
-          <button
-            onClick={handleVisitLink}
-            className="bg-primary text-bg-main px-6 py-3 rounded-lg font-mono hover:bg-primary-focus transition-all hover:scale-105 shadow-lg hover:shadow-primary/50"
-          >
-            [visit_live_site]
-          </button>
-          <button
-            onClick={onClose}
-            className="bg-gray-700 text-white px-6 py-3 rounded-lg font-mono hover:bg-gray-600 transition-all hover:scale-105 shadow-lg"
-          >
-            [close]
-          </button>
-        </div>
-
-        {/* Close button (X) in top-right corner */}
-        <button
-          onClick={onClose}
-          className="absolute -top-4 -right-4 w-10 h-10 bg-red-500 hover:bg-red-600 rounded-full flex items-center justify-center text-white font-bold text-xl transition-all hover:scale-110 shadow-lg z-10"
-          aria-label="Close"
-        >
-          ×
-        </button>
+        {/* Corner decorations matching the portfolio style */}
+        <div className="absolute -top-2 -left-2 w-12 h-12 border-l-2 border-t-2 border-primary/40 opacity-50 pointer-events-none"></div>
+        <div className="absolute -bottom-2 -right-2 w-12 h-12 border-r-2 border-b-2 border-primary/40 opacity-50 pointer-events-none"></div>
       </div>
     </div>
   );
