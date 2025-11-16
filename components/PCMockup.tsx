@@ -9,6 +9,7 @@ interface PCMockupProps {
 const PCMockup: React.FC<PCMockupProps> = ({ url, title, onClose }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [iframeError, setIframeError] = useState(false);
+  const modalRef = React.useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // Prevent body scroll when modal is open
@@ -20,6 +21,11 @@ const PCMockup: React.FC<PCMockupProps> = ({ url, title, onClose }) => {
     document.body.style.position = 'fixed';
     document.body.style.top = `-${scrollY}px`;
     document.body.style.width = '100%';
+    
+    // Ensure modal scroll container starts at top
+    if (modalRef.current) {
+      modalRef.current.scrollTop = 0;
+    }
     
     return () => {
       document.body.style.overflow = originalOverflow;
@@ -59,6 +65,7 @@ const PCMockup: React.FC<PCMockupProps> = ({ url, title, onClose }) => {
 
   return (
     <div 
+      ref={modalRef}
       className="fixed inset-0 z-50 bg-bg-main/95 backdrop-blur-md animate-fadeIn overflow-auto"
       onClick={onClose}
     >
