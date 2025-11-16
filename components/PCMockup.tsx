@@ -8,6 +8,7 @@ interface PCMockupProps {
 
 const PCMockup: React.FC<PCMockupProps> = ({ url, title, onClose }) => {
   const [isLoading, setIsLoading] = useState(true);
+  const [iframeError, setIframeError] = useState(false);
 
   useEffect(() => {
     // Prevent body scroll when modal is open
@@ -17,24 +18,45 @@ const PCMockup: React.FC<PCMockupProps> = ({ url, title, onClose }) => {
     };
   }, []);
 
+  useEffect(() => {
+    // Detect if iframe fails to load due to X-Frame-Options
+    const timer = setTimeout(() => {
+      if (isLoading) {
+        // If still loading after 10 seconds, likely blocked
+        setIframeError(true);
+        setIsLoading(false);
+      }
+    }, 10000);
+
+    return () => clearTimeout(timer);
+  }, [isLoading]);
+
   const handleVisitLink = () => {
     window.open(url, '_blank', 'noopener,noreferrer');
   };
 
   const handleIframeLoad = () => {
     setIsLoading(false);
+    setIframeError(false);
+  };
+
+  const handleIframeError = () => {
+    setIsLoading(false);
+    setIframeError(true);
   };
 
   return (
     <div 
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-bg-main/95 backdrop-blur-md animate-fadeIn overflow-y-auto"
+      className="fixed inset-0 z-50 bg-bg-main/95 backdrop-blur-md animate-fadeIn overflow-y-auto"
       onClick={onClose}
     >
-      {/* Modal Container */}
-      <div 
-        className="relative w-full max-w-6xl my-auto animate-scaleIn"
-        onClick={(e) => e.stopPropagation()}
-      >
+      {/* Centering wrapper */}
+      <div className="min-h-screen flex items-center justify-center p-4">
+        {/* Modal Container */}
+        <div 
+          className="relative w-full max-w-6xl animate-scaleIn"
+          onClick={(e) => e.stopPropagation()}
+        >
         {/* Terminal-style Window */}
         <div className="relative w-full bg-bg-card backdrop-blur-md border-2 border-primary/30 rounded-lg shadow-2xl shadow-primary/20 flex flex-col overflow-hidden">
           {/* Terminal Header */}
@@ -68,11 +90,29 @@ const PCMockup: React.FC<PCMockupProps> = ({ url, title, onClose }) => {
                 </div>
               </div>
             )}
+            {iframeError && (
+              <div className="absolute inset-0 flex items-center justify-center bg-bg-main z-10">
+                <div className="text-center max-w-md px-6">
+                  <div className="text-primary text-4xl mb-4">⚠</div>
+                  <p className="text-text-main font-mono text-sm mb-2">[embedding_blocked]</p>
+                  <p className="text-text-muted text-xs mb-6">
+                    This site cannot be embedded due to security restrictions (X-Frame-Options).
+                  </p>
+                  <button
+                    onClick={handleVisitLink}
+                    className="bg-primary/20 border border-primary/40 text-primary px-6 py-3 rounded font-mono text-sm hover:bg-primary/30 transition-colors"
+                  >
+                    [open_in_new_tab]
+                  </button>
+                </div>
+              </div>
+            )}
             <iframe
               src={url}
               className="w-full h-full border-0"
               title={title}
               onLoad={handleIframeLoad}
+              onError={handleIframeError}
               sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox"
             />
           </div>
@@ -104,6 +144,7 @@ const PCMockup: React.FC<PCMockupProps> = ({ url, title, onClose }) => {
         {/* Corner decorations matching the portfolio style */}
         <div className="absolute -top-2 -left-2 w-12 h-12 border-l-2 border-t-2 border-primary/40 opacity-50 pointer-events-none"></div>
         <div className="absolute -bottom-2 -right-2 w-12 h-12 border-r-2 border-b-2 border-primary/40 opacity-50 pointer-events-none"></div>
+        </div>
       </div>
     </div>
   );
